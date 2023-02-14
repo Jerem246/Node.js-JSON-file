@@ -2,22 +2,12 @@ const express = require('express');
     app = express();
     path = require('path');
     fs = require ('fs');
-    https = require ('https');
-
-certfile = fs.readFileSync(path.join(__dirname, "certif" ,'cert.pem'));
-keyfile = fs.readFileSync(path.join(__dirname, "certif" ,'Key.pem'))
-
-const secureServe = https.createServer({
-    cert: certfile,
-    key: keyfile,
-    passphrase: '02Jeremy02'
-}, app)   
-
+ 
 
 // Request 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Server is running...!')
 })
 
 app.post('/save-email', (req, res) => {
@@ -140,4 +130,6 @@ app.post("/carteC", (req, res) => {
 
 // End Request 
 
-secureServe.listen(8080, console.log("Server is running on port 8080"))
+app.listen(8080, () => {
+  console.log(`server started well !`);
+});

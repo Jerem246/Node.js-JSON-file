@@ -143,6 +143,7 @@ app.get("/view-data", (req, res) => {
       let mdpData = JSON.parse(jsonData);
       res.send(mdpData);
     });
+})
 // End Request 
 
 app.listen(8080, () => {

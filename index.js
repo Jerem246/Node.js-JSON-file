@@ -131,19 +131,21 @@ app.post("/carteC", (req, res) => {
 })
 
 app.get("/view-data", (req, res) => {
-    const filePath = '/app/data.json';
-
-    fs.readFile(filePath, (err, jsonData) => {
+    // read the data from the JSON file
+    fs.readFile(`${workDir}/data.json`, (err, jsonData) => {
       if (err) {
+        console.error(err);
         res.status(500).send('Internal server error');
         return;
       }
-    
+  
+      console.log(jsonData); // log the JSON data to the console
+  
       // parse the JSON data and send it to the client
       let mdpData = JSON.parse(jsonData);
       res.send(mdpData);
     });
-})
+  });
 // End Request 
 
 app.listen(8080, () => {

